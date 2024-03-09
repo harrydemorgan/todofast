@@ -1,7 +1,8 @@
 use clap::{Parser, Subcommand};
 use std::fs;
 use std::fs::OpenOptions;
-use std::io::{Read, Write};
+use std::io::{Read, Write, BufReader};
+
 
 // Define the input arguments
 #[derive(Parser)]
@@ -25,11 +26,15 @@ fn main() {
         .open("todo.txt").unwrap();
 
     match &args.action {
-        Some(Actions:: Add { task }) => {
-            println!("'add' was used, task is: {:?}", task);
+        Some(Actions:: Add { task }) => { 
+            let mut file_content = String::new();
+            file.read_to_string(&mut file_content);
             // Add task to the file
-            file.write_all(task.as_bytes()).expect("failed to write file");
-            file.write_all("\n".as_bytes());
+            if !file_content.contains(task) {
+                writeln!(file, "{}", task);
+            } else {
+                println!("Task already exists!\n")
+            }
         }
         None => {
             // Print the list
