@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 use std::fs;
 use std::fs::OpenOptions;
-use std::io::Write;
+use std::io::{Read, Write};
 
 // Define the input arguments
 #[derive(Parser)]
@@ -33,7 +33,13 @@ fn main() {
         }
         None => {
             // Print the list
-            
+            // Create an empty mutable string
+            let mut file_content = String::new();
+
+            // Copy contents of file to a mutable string
+            file.read_to_string(&mut file_content);
+
+            println!("{}", file_content);
         }
     }
 }
