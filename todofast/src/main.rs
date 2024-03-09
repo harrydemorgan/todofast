@@ -27,7 +27,9 @@ fn main() {
             }
         }
         None => {
-            println!("'default subcommand'");
+            for (index, task) in list.iter().enumerate() {
+                println!("{} {}", index+1, task)
+            }
         }
     }
 }
