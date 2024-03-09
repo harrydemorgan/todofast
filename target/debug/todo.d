@@ -1,1 +1,1 @@
-/Users/harrymorgan/Documents/My\ Projects/todofast/todofast/target/debug/todo: /Users/harrymorgan/Documents/My\ Projects/todofast/todofast/src/main.rs
+/Users/harrymorgan/Documents/My\ Projects/todofast/target/debug/todo: /Users/harrymorgan/Documents/My\ Projects/todofast/src/main.rs
