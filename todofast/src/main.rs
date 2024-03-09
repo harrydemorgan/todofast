@@ -29,11 +29,17 @@ fn main() {
         Some(Actions:: Add { task }) => { 
             let mut file_content = String::new();
             file.read_to_string(&mut file_content);
+            let mut task_exists = false;
             // Add task to the file
-            if !file_content.contains(task) {
-                writeln!(file, "{}", task);
+            for line in file_content.lines() {
+                if line == (task) {
+                    task_exists = true;
+                }
+            }
+            if task_exists {
+                println!("Task already exists!")
             } else {
-                println!("Task already exists!\n")
+                writeln!(file, "{}", task);
             }
         }
         None => {
