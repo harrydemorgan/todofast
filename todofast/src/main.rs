@@ -46,11 +46,15 @@ fn main() {
             // Print the list
             // Create an empty mutable string
             let mut file_content = String::new();
-
+            
             // Copy contents of file to a mutable string
             file.read_to_string(&mut file_content);
 
-            println!("{}", file_content);
+            let lines: Vec<&str> = file_content.split('\n').collect();
+            // Print lines with line numbers
+            for (line_num, line) in lines.iter().enumerate() {
+                println!("{: >3}: {}", line_num + 1, line);
+            }
         }
     }
 }
