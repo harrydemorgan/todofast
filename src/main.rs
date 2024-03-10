@@ -16,29 +16,28 @@ struct Cli {
 enum Actions {
     Add { task: String },
     Remove { index: usize },
+
 }
 
 fn main() {
+    // Get arguments
     let args = Cli::parse();
     let home_dir = dirs_next::home_dir();
-    let home_d = dirs_next::home_dir();
+    // Convert to path string
     let mut dir: String = match home_dir {
         Some(path) => path.to_string_lossy().into_owned(),
         None => String::from("/"),
     };
-    let mut filename: String = match home_d {
-        Some(path) => path.to_string_lossy().into_owned(),
-        None => String::from("/"),
-    };
     dir.push_str("/Documents/ToDoFast/");
-    filename.push_str("/Documents/ToDoFast/todo.txt");
-    let filename_copy = filename.clone();
-    let _ = fs::create_dir(dir);
+    // Create directory to store text file
+    let _ = fs::create_dir(&dir);
+    // Create text file
+    dir.push_str("todo.txt");
     let mut file = OpenOptions::new()
         .read(true)
         .append(true)
         .create(true)
-        .open(filename).unwrap();
+        .open(&dir).unwrap();
 
     match &args.action {
         Some(Actions:: Add { task }) => { 
@@ -54,7 +53,7 @@ fn main() {
             if task_exists {
                 println!("Task already exists!")
             } else {
-                writeln!(file, "{}", task);
+                writeln!(file, "{}", task).expect("Failed to write to file");
             }
         }
         Some(Actions:: Remove { index }) => {
@@ -66,10 +65,10 @@ fn main() {
                     .read(true)
                     .write(true)
                     .truncate(true)
-                    .open(filename_copy).unwrap();
+                    .open(&dir).unwrap();
                 for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
                     if line_num != index-1 {
-                        writeln!(file, "{}", line);
+                        writeln!(file, "{}", line).expect("Failed to write to file");
                     }
                 }
             }
