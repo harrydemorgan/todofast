@@ -79,12 +79,12 @@ fn main() {
             // Create an empty mutable string
             let mut file_content = String::new();
 
+            // Copy contents of file to a mutable string
+            let _ = file.read_to_string(&mut file_content);
+
             if file_content.is_empty() {
                 println!("Nothing to do");
             }
-            
-            // Copy contents of file to a mutable string
-            let _ = file.read_to_string(&mut file_content);
 
             let lines: Vec<&str> = file_content.split('\n').collect();
             // Print lines with line numbers
