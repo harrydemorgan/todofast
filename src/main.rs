@@ -52,8 +52,8 @@ fn main() {
 
             let lines: Vec<&str> = file_content.split('\n').collect();
             // Print lines with line numbers
-            for (line_num, line) in lines.iter().enumerate() {
-                println!("{: >3}: {}", line_num + 1, line);
+            for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
+                println!("{: >3} {}", line_num + 1, line);
             }
         }
     }
