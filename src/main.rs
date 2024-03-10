@@ -1,7 +1,6 @@
 use clap::{Parser, Subcommand};
-use std::fs;
 use std::fs::OpenOptions;
-use std::io::{Read, Write, BufReader};
+use std::io::{Read, Write};
 
 
 // Define the input arguments
@@ -29,7 +28,7 @@ fn main() {
     match &args.action {
         Some(Actions:: Add { task }) => { 
             let mut file_content = String::new();
-            file.read_to_string(&mut file_content);
+            let _ = file.read_to_string(&mut file_content);
             let mut task_exists = false;
             // Add task to the file
             for line in file_content.lines() {
@@ -45,7 +44,7 @@ fn main() {
         }
         Some(Actions:: Remove { index }) => {
             let mut file_content = String::new();
-            file.read_to_string(&mut file_content);
+            let _ = file.read_to_string(&mut file_content);
             let lines: Vec<&str> = file_content.split('\n').collect();
             if file_content.lines().count() > index-1 {
                 let mut file = OpenOptions::new()
@@ -66,7 +65,7 @@ fn main() {
             let mut file_content = String::new();
             
             // Copy contents of file to a mutable string
-            file.read_to_string(&mut file_content);
+            let _ = file.read_to_string(&mut file_content);
 
             let lines: Vec<&str> = file_content.split('\n').collect();
             // Print lines with line numbers
