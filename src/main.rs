@@ -1,7 +1,8 @@
 use clap::{Parser, Subcommand};
+use std::fs;
 use std::fs::OpenOptions;
 use std::io::{Read, Write};
-
+use dirs_next;
 
 // Define the input arguments
 #[derive(Parser)]
@@ -19,7 +20,20 @@ enum Actions {
 
 fn main() {
     let args = Cli::parse();
-    let filename = "/Users/harrymorgan/Documents/My Projects/todofast/todo.txt";
+    let home_dir = dirs_next::home_dir();
+    let home_d = dirs_next::home_dir();
+    let mut dir: String = match home_dir {
+        Some(path) => path.to_string_lossy().into_owned(),
+        None => String::from("/"),
+    };
+    let mut filename: String = match home_d {
+        Some(path) => path.to_string_lossy().into_owned(),
+        None => String::from("/"),
+    };
+    dir.push_str("/Documents/ToDoFast/");
+    filename.push_str("/Documents/ToDoFast/todo.txt");
+    let filename_copy = filename.clone();
+    fs::create_dir(dir);
     let mut file = OpenOptions::new()
         .read(true)
         .append(true)
@@ -52,7 +66,7 @@ fn main() {
                     .read(true)
                     .write(true)
                     .truncate(true)
-                    .open(filename).unwrap();
+                    .open(filename_copy).unwrap();
                 for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
                     if line_num != index-1 {
                         writeln!(file, "{}", line);
