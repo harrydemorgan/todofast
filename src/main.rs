@@ -15,6 +15,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Actions {
     Add { task: String },
+    Remove { index: usize },
 }
 
 fn main() {
@@ -40,6 +41,23 @@ fn main() {
                 println!("Task already exists!")
             } else {
                 writeln!(file, "{}", task);
+            }
+        }
+        Some(Actions:: Remove { index }) => {
+            let mut file_content = String::new();
+            file.read_to_string(&mut file_content);
+            let lines: Vec<&str> = file_content.split('\n').collect();
+            if file_content.lines().count() > index-1 {
+                let mut file = OpenOptions::new()
+                    .read(true)
+                    .write(true)
+                    .truncate(true)
+                    .open("todo.txt").unwrap();
+                for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
+                    if line_num != index-1 {
+                        writeln!(file, "{}", line);
+                    }
+                }
             }
         }
         None => {
