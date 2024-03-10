@@ -33,7 +33,7 @@ fn main() {
     dir.push_str("/Documents/ToDoFast/");
     filename.push_str("/Documents/ToDoFast/todo.txt");
     let filename_copy = filename.clone();
-    fs::create_dir(dir);
+    let _ = fs::create_dir(dir);
     let mut file = OpenOptions::new()
         .read(true)
         .append(true)
@@ -78,6 +78,10 @@ fn main() {
             // Print the list
             // Create an empty mutable string
             let mut file_content = String::new();
+
+            if file_content.is_empty() {
+                println!("Nothing to do");
+            }
             
             // Copy contents of file to a mutable string
             let _ = file.read_to_string(&mut file_content);
