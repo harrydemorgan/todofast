@@ -27,5 +27,5 @@ todo remove <Index>
 3. Move executable to PATH
    MacOS/Linux:
    ```
-   sudo mv /target/release/todo /usr/local/bin/
+   sudo mv target/release/todo /usr/local/bin/
    ```
