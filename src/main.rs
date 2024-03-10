@@ -16,7 +16,7 @@ struct Cli {
 enum Actions {
     Add { task: String },
     Remove { index: usize },
-
+    Swap { index1: usize, index2: usize }
 }
 
 fn main() {
@@ -68,6 +68,29 @@ fn main() {
                     .open(&dir).unwrap();
                 for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
                     if line_num != index-1 {
+                        writeln!(file, "{}", line).expect("Failed to write to file");
+                    }
+                }
+            }
+        }
+        Some(Actions:: Swap { index1, index2 }) => {
+            let mut file_content = String::new();
+            let _ = file.read_to_string(&mut file_content);
+            let lines: Vec<&str> = file_content.split('\n').collect();
+            let swap_one = lines[*index1-1];
+            let swap_two = lines[*index2-1];
+            if file_content.lines().count() > index1-1 && file_content.lines().count() > index2-1  {
+                let mut file = OpenOptions::new()
+                    .read(true)
+                    .write(true)
+                    .truncate(true)
+                    .open(&dir).unwrap();
+                for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
+                    if line_num == index1-1 {
+                        writeln!(file, "{}", swap_two).expect("Failed to write to file"); 
+                    } else if line_num == index2-1 {
+                        writeln!(file, "{}", swap_one).expect("Failed to write to file"); 
+                    } else {
                         writeln!(file, "{}", line).expect("Failed to write to file");
                     }
                 }
