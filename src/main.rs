@@ -19,11 +19,12 @@ enum Actions {
 
 fn main() {
     let args = Cli::parse();
+    let filename = "/Users/harrymorgan/Documents/My Projects/todofast/todo.txt";
     let mut file = OpenOptions::new()
         .read(true)
         .append(true)
         .create(true)
-        .open("todo.txt").unwrap();
+        .open(filename).unwrap();
 
     match &args.action {
         Some(Actions:: Add { task }) => { 
@@ -51,7 +52,7 @@ fn main() {
                     .read(true)
                     .write(true)
                     .truncate(true)
-                    .open("todo.txt").unwrap();
+                    .open(filename).unwrap();
                 for (line_num, line) in lines.iter().enumerate().take(lines.len()-1) {
                     if line_num != index-1 {
                         writeln!(file, "{}", line);
