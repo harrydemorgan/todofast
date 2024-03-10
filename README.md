@@ -11,6 +11,7 @@ Actions:
 todo
 todo add <String>
 todo remove <Index>
+todo swap <Index1> <Index2>
 ```
 
 ## Setup
