@@ -23,10 +23,13 @@ todo swap <Index1> <Index2>
    ```
 2. cd into directory and build with release flag
    ```
+   cd todofast
    cargo build --release
    ```
-3. Move executable to PATH
+3. Move executable to PATH\
    MacOS/Linux:
    ```
    sudo mv target/release/todo /usr/local/bin/
    ```
+   Windows:
+   Open Environment Variables then select path in user variables and copy file path of exe (...\todofast\target\release)
